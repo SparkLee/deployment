@@ -1,0 +1,45 @@
+#
+# The MySQL  Server configuration file.
+#
+# For explanations see
+# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
+
+[mysqld]
+pid-file = /var/run/mysqld/mysqld.pid
+socket   = /var/run/mysqld/mysqld.sock
+
+# 时区设置
+default-time_zone = '+08:00'
+
+# 编码设置
+character-set-server = utf8
+
+# 最大连接数
+max_connections = 500
+
+# 数据目录
+datadir = /var/lib/mysql
+
+# 错误日志
+log-error = /var/log/mysql/error.log
+
+# 通用日志(默认关闭，可通过执行"SET GLOBAL general_log = ON;"动态开启以便调试)
+general_log      = OFF
+general_log_file = /var/log/mysql/general.log
+
+# 打开binlog日志
+server-id=1
+log_bin=mysql-bin
+binlog_format=ROW
+# binlog日志保存7天，老的会被自动删除
+expire_logs_days=7
+
+# 解决报错“SQLSTATE[42000]: Syntax error or access violation: 1055 Expression #2 of SELECT list is not
+# in GROUP BY clause and contains nonaggregated column 'xiaoke_db_sdk.h_pay.app_id' which is not
+# functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by”
+sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+
+# By default we only accept connections from localhost
+#bind-address	= 127.0.0.1
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0

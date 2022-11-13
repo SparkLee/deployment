@@ -1,0 +1,37 @@
+version: "2"
+
+services:
+  mysql:
+    hostname: mysql
+    restart: always
+    container_name: sparklee-mysql
+    image: sparklee/mysql:5.7
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+  adminer:
+    hostname: adminer
+    restart: always
+    container_name: sparklee-adminer
+    image: adminer
+    ports:
+      - "8081:8080"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+volumes:
+  mysql_data:
